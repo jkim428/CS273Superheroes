@@ -27,7 +27,7 @@ import java.util.List;
 public class QuizActivity extends AppCompatActivity {
 
     private static final String TAG = "CS273 Superheroes";
-    private static final int SUPERHEROES_IN_QUIZ = 5;
+    private static final int SUPERHEROES_IN_QUIZ = 10;
 
     private Button[] mButtons = new Button[4];
     private List<Superhero> mAllSuperheroesList;
@@ -120,15 +120,13 @@ public class QuizActivity extends AppCompatActivity {
         do {
             Collections.shuffle(mAllSuperheroesList);
         }
-        while (mAllSuperheroesList.subList(0, mButtons.length).contains(mCorrectSuperhero));
+        while (!mAllSuperheroesList.subList(0, mButtons.length).contains(mCorrectSuperhero));
 
         for (int i = 0; i < mButtons.length; i++)
         {
             mButtons[i].setEnabled(true);
             mButtons[i].setText(mAllSuperheroesList.get(i).getName());
         }
-
-        //mButtons[rng.nextInt(mButtons.length)].setText(mCorrectSuperhero.getName());
     }
 
     /**
@@ -175,8 +173,15 @@ public class QuizActivity extends AppCompatActivity {
                 });
                 builder.setCancelable(false);
                 builder.create();
+                builder.show();
             }
+        }
 
+        else
+        {
+            clickedButton.setEnabled(false);
+            mAnswerTextView.setText(getString(R.string.incorrect_answer));
+            mAnswerTextView.setTextColor(ContextCompat.getColor(this, R.color.incorrect_answer));
         }
     }
 
